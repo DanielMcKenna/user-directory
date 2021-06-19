@@ -1,4 +1,6 @@
+import { render } from '@testing-library/react';
 import React, { Component } from 'react';
+import NewPerson from './NewPerson'
 
 class PeopleCard extends Component{
   constructor(props){
@@ -22,12 +24,26 @@ class PeopleCard extends Component{
     }
   }
 
+  personAddCard = () => {
+    this.setState({addingPerson: true})
+
+
+  }
+
+  handleRemovePerson(id){
+
+    let people = this.state.people.filter(person => person.id != id);
+    this.setState({people});
+  }
+
+
  
   render(){
-    console.log(this.state);
+    
     return(
 
     <main>
+      {this.state.addingPerson && <NewPerson />}
       <section class="people_card">
         <p>From: {this.props.people[this.state.currentIndex].name.first} {this.props.people[this.state.currentIndex].name.last}</p>
 
@@ -44,6 +60,11 @@ class PeopleCard extends Component{
       </section>
      <section class="button-Menu">
         <button onClick={ () => this.personPrevious() }>Previous</button>
+        <section class="middle-button-menu">
+          <button>Edit</button>
+          <button onClick={ () => this.handleRemovePerson(this.props.people[this.state.currentIndex].id)}>Delete</button>
+          <button onClick={this.personAddCard}>New</button>
+        </section>
         <button onClick= { () => this.personNext()}>Next</button>
       </section> 
     </main>

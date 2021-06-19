@@ -9,13 +9,18 @@ class App extends Component {
     super(props);
     this.state = {
       people: data,
+      
     }
+  }
+  handleAdd = (newPerson)=> {
+    const { people } = this.state;
+    this.setState({ people: [...people, newPerson]})
   }
   render() {
   return (
    <section>
      <Navbar />
-     <PeopleCard people={this.state.people}/>
+     <PeopleCard people={this.state.people} handleAdd={this.handleAdd}/>
    </section>
   );
   }
